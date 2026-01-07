@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_billionaire/add_money.dart';
+import 'package:flutter_billionaire/balance_value.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
@@ -14,13 +16,11 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   double balance = 0;
-  void ButtonClicked() async {
-    setState(() {
-      balance += 500;
-    });
 
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setDouble('balance', balance);
+  @override
+  void initState() {
+    super.initState();
+    loadMoney();
   }
 
   void loadMoney() async {
@@ -28,6 +28,15 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       balance = prefs.getDouble('balance') ?? 0;
     });
+  }
+
+  void buttonClicked() async {
+    setState(() {
+      balance += 500;
+    });
+
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setDouble('balance', balance);
   }
 
   @override
@@ -45,31 +54,9 @@ class _MyAppState extends State<MyApp> {
             // mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Spacer(),
-              Column(
-                children: [
-                  Text("Bank Balance"),
-                  Text("\$$balance"),
-                  OutlinedButton(
-                    onPressed: loadMoney,
-                    child: Text("Load Money"),
-                  ),
-                ],
-              ),
+              Column(children: [BalanceValue(balance: balance)]),
               Spacer(),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red[700],
-                    padding: EdgeInsets.all(20),
-                  ),
-                  onPressed: ButtonClicked,
-                  child: Text(
-                    "Click Here",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-              ),
+              AddMoneyButton(addMoneyFunction: buttonClicked),
             ],
           ),
         ),
