@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AddTodo extends StatefulWidget {
@@ -18,12 +19,11 @@ class _AddTodoState extends State<AddTodo> {
         // Text("Add your task here"),
         TextField(
           autofocus: true,
-          
           controller: todoText,
           decoration: InputDecoration(
             contentPadding: EdgeInsets.all(5),
             hintText: "Write your todo here",
-            icon: Icon(Icons.task),
+            icon: Icon(CupertinoIcons.list_bullet),
             labelText: "Task",
           ),
         ),
