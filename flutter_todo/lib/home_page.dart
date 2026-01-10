@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_todo/add_todo.dart';
+// import 'package:flutter_todo/add_todo.dart';
 import 'package:flutter_todo/widgets/todo_list.dart';
 import 'package:flutter_todo/widgets/todo_modal.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -79,17 +79,13 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // final Uri _url = Uri.parse('https://kosalvathanak.vercel.app/');
-
-  // Future<void> _launchUrl() async {
-  //   if (!await launchUrl(_url)) {
-  //     throw Exception('Could not launch $_url');
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: showToDoBottomSheet,
+        child: Icon(CupertinoIcons.add),
+      ),
       drawer: Drawer(
         child: Column(
           children: [
@@ -135,17 +131,12 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text("Todo App"),
         centerTitle: true,
-        actions: [
-          InkWell(
-            onTap: showToDoBottomSheet,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Icon(CupertinoIcons.add, color: Colors.blue),
-            ),
-          ),
-        ],
       ),
-      body: Todolist(todoList: todoList, removeTodo: removeTodo),
+      body: Todolist(
+        todoList: todoList,
+        updateTodotoLocal: updateTodotoLocal,
+        removeTodo: removeTodo,
+      ),
     );
   }
 }
